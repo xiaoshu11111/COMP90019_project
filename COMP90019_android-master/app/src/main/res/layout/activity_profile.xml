@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile">
+
+    <ImageView
+        android:id="@+id/graffiti_icon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/graffiti_icon" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/back"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@+id/graffiti_icon"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/back"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:text="Profile"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp"
+        android:textColor="#101010"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:layout_below="@+id/title"
+        android:textSize="30dp"
+        android:textColor="#101010"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:layout_below="@+id/name"
+        android:textSize="30dp"
+        android:textColor="#101010"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:id="@+id/change_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Name"
+        android:textColor="#Aa1f06"
+        android:layout_below="@+id/email"
+        android:layout_marginTop="50dp"
+        android:textAllCaps="false"
+        android:textSize="25dp"
+        android:paddingLeft="20dp" />
+
+    <TextView
+        android:id="@+id/change_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Pawssword"
+        android:textColor="#Aa1f06"
+        android:layout_below="@+id/change_name"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="false"
+        android:textSize="25dp"
+        android:paddingLeft="20dp" />
+
+    <TextView
+        android:id="@+id/sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        android:textColor="#Aa1f06"
+        android:layout_below="@+id/change_password"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="false"
+        android:textSize="25dp"
+        android:paddingLeft="20dp" />
+
+</RelativeLayout>

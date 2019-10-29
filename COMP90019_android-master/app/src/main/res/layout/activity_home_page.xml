@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home_page">
+
+    <ImageView
+        android:id="@+id/graffiti_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/graffiti_icon" />
+
+    <ImageView
+        android:id="@+id/home_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/home_icon"
+        android:layout_below="@+id/graffiti_icon"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/home_icon"
+        android:layout_alignBottom="@+id/home_icon"
+        android:text="Share new graffiti!"
+        android:textColor="#101010"
+        android:textSize="33dp"
+        android:textStyle="bold"
+        android:layout_marginRight="15dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/navigation"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/add_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/add_photo"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/photo_library"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/photo_library"
+            android:layout_marginLeft="25dp"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/bar"
+        app:itemIconTint="@color/colorPrimaryDark"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconSize="30dp"
+        />
+
+</RelativeLayout>
