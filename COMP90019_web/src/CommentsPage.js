@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import firebase from './firebase';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Background from './map_back.png';
 
 export default class CommentsPage extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ export default class CommentsPage extends React.Component {
     const id = this.props.match.params.id;
     const text = this.state.text;
     const submit = false;
-    if(text!=null){
+    if(text!=null && text.length < 140){
       firebase.database().ref('comments').push().set({
         id,
         content: this.state.text || '',
@@ -118,7 +117,7 @@ export default class CommentsPage extends React.Component {
                             if(this.submit){
                               this.props.history.go(0);
                             }else{
-                              window.alert("Operation failed: the new comment cannot be void");
+                              window.alert("Operation failed: the new comment cannot be void or more than 140 letters.");
                             }
                           }}
                           style={{ marginLeft: 20, width: 200, backgroundColor: '#505FB5', color:"white"}}>
