@@ -1,7 +1,7 @@
 //
 //  ChangePWViewController.swift
 //  Graffiti
-//
+//  Change password page: User has to prodive relevent details to change password on firebase.
 //  Created by Teng-Sheng Ho on 2019/10/7.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -16,11 +16,11 @@ class ChangePWViewController: UIViewController {
     @IBOutlet weak var ReNewPwTF: UITextField!
     
     override func viewDidLoad() {
-      self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        //Hide keyboard by touching anywhere outside the keyboard.
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
+    //When save button is clicked, check if each text field is correct.
     @IBAction func SaveAction(_ sender: Any) {
         if emailTf.text?.isEmpty == true || oldPWTF.text?.isEmpty == true || newPwTF.text?.isEmpty == true || ReNewPwTF.text?.isEmpty == true || newPwTF.text != ReNewPwTF.text {
             
@@ -35,8 +35,7 @@ class ChangePWViewController: UIViewController {
         }
     }
     // MARK: - Update Password
-    
-
+    //When provided details are correct, update to firebase.
     func changePassword(email: String, oldPW: String, newPW: String) {
         let user = Auth.auth().currentUser
         let credential = EmailAuthProvider.credential(withEmail:email, password: oldPW)
@@ -76,15 +75,4 @@ class ChangePWViewController: UIViewController {
          }
     
        }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

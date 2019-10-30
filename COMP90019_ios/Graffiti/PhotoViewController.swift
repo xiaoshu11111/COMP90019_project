@@ -1,7 +1,7 @@
 //
 //  PhotoViewController.swift
 //  Graffiti
-//
+//  Photo Page: The upload page includes information that will be uploaded.
 //  Created by Teng-Sheng Ho on 2019/9/9.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -36,11 +36,14 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
     var isGraffiti = false
     
     override func viewDidLoad() {
-   
-        imageView.image = image
+        //Hide keyboard by touching anywhere outside the keyboard.
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = false
+        
+        // The image is the photo user choosed from previous event page.
+        imageView.image = image
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -48,6 +51,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
+            //Update location in real-time.
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
@@ -55,6 +59,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
     }
 
+    // When cancel button is clicked, the appropriate items must be shown.
     @IBAction func cancelAction(_ sender: Any) {
         finishButton.isHidden = false
         chooseButton.isHidden = false
@@ -62,6 +67,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         cancelButton.isHidden = true
         desView.isEditable = true
         tagView.isEnabled = true
+        // set the color of text view background.
         desView.backgroundColor = UIColor.white
         tagView.backgroundColor = UIColor.white
         locationText.backgroundColor = UIColor.white
@@ -69,7 +75,9 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         uploadLabels = ""
     }
     
+    // When cancel button is clicked, the appropriate items must be shown.
     @IBAction func finishAction(_ sender: Any) {
+        
         if(imageView.image == nil && !(desView.text.isEmpty) && !(tagView.text!.isEmpty) ){
             let alertController = UIAlertController(title: "Error", message: "Select an image", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -83,6 +91,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
             cancelButton.isHidden = false
             desView.isEditable = false
             tagView.isEnabled = false
+            // set the color of text view background.
             desView.backgroundColor = UIColor.clear
             tagView.backgroundColor = UIColor.clear
             locationText.backgroundColor = UIColor.clear
@@ -90,8 +99,11 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    //when upload button is clicked, prepare the information format as argument and call uploadMedia function.
     @IBAction func uploadAction(_ sender: Any) {
+        // Create an ID for image as the ID in firebase.
         imageID = (self.ref?.child("Image").childByAutoId().key)
+        //upload the photo information with proper format.
         uploadMedia() { url in
             guard url != nil else { return }
             self.ref?.child("images").child(self.imageID).setValue([
@@ -107,7 +119,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    
+    // When choose button is clicked, user can choose to take a photo or pick one from gallery.
     @IBAction func chooseAction(_ sender: Any) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -129,9 +141,9 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
     func labelImage(){
         var wallL = false
         var postL = false
-   
-        
         self.uploadLabels = ""
+        
+        //Initialize the on-device ML image labller.
         let labeler = Vision.vision().onDeviceImageLabeler()
         let visionImage = VisionImage(image: self.imageView.image!)
         
@@ -141,6 +153,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
                 self.dismiss(animated: true, completion: nil)
                 return
             }
+            // Run through each detected label, and check if it fits our constraint.
             for label in labels {
                 var confd:Double
                 self.uploadLabels += "\(label.text) - \(label.confidence!),"
@@ -167,10 +180,10 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     //MARK: - Location manager
+    //The location manager that can provide us longtidue, latitude, and address.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.uploadCoordinates = "\(locValue.latitude) \(locValue.longitude)"
-        // print(self.uploadCoordinates!)
         
         let geoCoder = CLGeocoder()
         let location = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
@@ -183,7 +196,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         
         self.locationText.text = placeMark.postalAddress!.street + ", " + placeMark.postalCode!
         //print(placeMark.postalAddress?.subAdministrativeArea)
-                  // Complete address as PostalAddress
+        // Complete address as PostalAddress
         //self.locationText.text = placeMark.postalAddress as Any as? String//  Import Contacts
         /*
         
@@ -206,7 +219,6 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
     func openCamera(){
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             pickImage.sourceType = UIImagePickerController.SourceType.camera
-            //If you dont want to edit the photo then you can set allowsEditing to false
             pickImage.allowsEditing = false
             pickImage.delegate = self
             self.present(pickImage, animated: true, completion: nil)
@@ -227,6 +239,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         self.present(pickImage, animated: true, completion: nil)
     }
     
+    //MARK: - Upload the photo to firebase.
     func uploadMedia(completion: @escaping (_ url: String?) -> Void) {
         
         let path = imageID + ".jpg"
@@ -234,6 +247,7 @@ class PhotoViewController: UIViewController, CLLocationManagerDelegate {
         let newMetadata = StorageMetadata()
         newMetadata.contentType = "image/jpeg";
         
+        //set the data we want to upload, and compress the photo.
         if let uploadData = imageView.image?.jpegData(compressionQuality: 0.4) {
             storageRef.putData(uploadData,metadata: newMetadata) { (metadata, error) in
                 if error != nil {

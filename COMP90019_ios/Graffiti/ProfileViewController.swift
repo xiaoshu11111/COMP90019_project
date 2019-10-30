@@ -1,7 +1,7 @@
 //
 //  ProfileViewController.swift
 //  Graffiti
-//
+//  Profile page: Some account related features.
 //  Created by Teng-Sheng Ho on 2019/9/24.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -25,9 +25,9 @@ class ProfileViewController: UIViewController {
         emailLabel.text = "Email:" + ((user?.email)!)
         nameLabel.text = "Name:" + ((user?.displayName)!)
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
     }
+    
+    //When user name is changed, the changed name can be shown immediately.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
@@ -36,9 +36,9 @@ class ProfileViewController: UIViewController {
         emailLabel.text = "Email:" + ((user?.email)!)
         nameLabel.text = "Name:" + ((user?.displayName)!)
     }
+    
     // prepare to send image to photo page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      
       if segue.identifier == "profileToPhoto" {
           let nextSg = segue.destination as! PhotoViewController
 
@@ -46,6 +46,7 @@ class ProfileViewController: UIViewController {
           }
       }
 
+    //When logout button is clicked.
     @IBAction func logOutAction(_ sender: Any) {
         if Auth.auth().currentUser != nil {
             do {
@@ -58,7 +59,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    //when clicking plus button
+    //when plus button is clicked, user can choose to take a photo or pick one from gallery.
     @IBAction func photoAction(_ sender: Any) {
                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
           
@@ -107,8 +108,8 @@ class ProfileViewController: UIViewController {
 
 }
 
+//MARK: - UIImagePickerControllerDelegate
 extension ProfileViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let editedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{

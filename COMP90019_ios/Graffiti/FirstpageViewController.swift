@@ -1,7 +1,7 @@
 //
 //  FirstpageViewController.swift
 //  Graffiti
-//
+//  The first page when user open the app, users can login or create an account.
 //  Created by Teng-Sheng Ho on 2019/9/24.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -15,13 +15,12 @@ class FirstpageViewController: UIViewController {
         self.navigationItem.hidesBackButton = false
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-    
+    //When create account button is clicked, navigate to sign up page.
     @IBAction func createAccount(_ sender: Any) {
         self.performSegue(withIdentifier: "signUpPage", sender: self)
     }
-    
+    //When login here button is clicked, navigate to login page.
     @IBAction func loginAction(_ sender: Any) {
         self.performSegue(withIdentifier: "logInPage", sender: self)
         

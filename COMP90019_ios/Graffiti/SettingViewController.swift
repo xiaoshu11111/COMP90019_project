@@ -1,7 +1,7 @@
 //
 //  SettingViewController.swift
 //  Graffiti
-//
+//  The setting page: Includes some information about developer and some details about this app.
 //  Created by Teng-Sheng Ho on 2019/9/24.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -18,14 +18,9 @@ class SettingViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = false
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
     }
     
-
-    
-
-    // prepare to send image to photo page
+    // prepare to send image to photo page.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      
       if segue.identifier == "settingToPhoto" {
@@ -34,6 +29,8 @@ class SettingViewController: UIViewController {
           nextSg.image = passImage
           }
       }
+    
+    //when plus button is clicked, user can choose to take a photo or pick one from gallery.
     @IBAction func photoAction(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
          

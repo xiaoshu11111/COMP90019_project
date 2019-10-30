@@ -1,7 +1,7 @@
 //
 //  SignUpViewController.swift
 //  Graffiti
-//
+//  Sign Up page: To create an account, user have to provide email, name, and password.
 //  Created by Teng-Sheng Ho on 2019/9/11.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -15,16 +15,19 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var pwField: UITextField!
     @IBOutlet weak var rePwField: UITextField!
+    
     override func viewDidLoad() {
+        //Hide keyboard by touching anywhere outside the keyboard.
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    //where to upload Name!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   // When sign up button is clicked, check each field is empty, email format is correct and never been used , and password is consistent and more than 6 characters.
     
     @IBAction func signUpAction(_ sender: Any) {
+        
         if (pwField.text != rePwField.text ){
             let alertController = UIAlertController(title: "Password Incorrect", message: "Please comfirm your re-type password!", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -39,29 +42,25 @@ class SignUpViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }else{
             
+            // All field arer not empty, and password is comfirmed.
+            // Check if email is used or other error detected by firebase.
             Auth.auth().createUser(withEmail: emailField.text!, password: pwField.text!){ (user, error) in
                 if error == nil {
-                        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                        changeRequest?.displayName = self.nameField.text!
-                        changeRequest?.commitChanges { (error) in
-                            if error != nil{
-                                print("Wrong!!!!!")
-                            }
-                            
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.displayName = self.nameField.text!
+                    changeRequest?.commitChanges { (error) in
+                        if error != nil{
+                            print("Wrong!!!!!")
+                        }
+                        
                     }
-                        let alert = UIAlertController(title: "Successful!", message: "You are a member now!\n Please login", preferredStyle: UIAlertController.Style.alert )
+                    let alert = UIAlertController(title: "Successful!", message: "You are a member now!\n Please login", preferredStyle: UIAlertController.Style.alert )
+                
+                   alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+                   self.navigationController?.popToRootViewController(animated: true)
+                   }))
                     
-                       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-                        
-                        
-                       self.navigationController?.popToRootViewController(animated: true)
-                       // let loginView = self.storyboard!.instantiateViewController(withIdentifier: "loginView") as! LoginViewController
-                        
-                        //self.navigationController?.pushToViewController(loginView, animated: true)
-                        
-                        
-                       }))
-                       self.present(alert, animated:true, completion: nil)
+                   self.present(alert, animated:true, completion: nil)
                 }
                 else{
                     

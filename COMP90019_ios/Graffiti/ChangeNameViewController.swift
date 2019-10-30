@@ -1,7 +1,7 @@
 //
 //  ChangeNameViewController.swift
 //  Graffiti
-//
+//  Change Name page : allow user to change their displayname and update to firebase.
 //  Created by Teng-Sheng Ho on 2019/10/9.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -13,12 +13,11 @@ class ChangeNameViewController: UIViewController {
 
     @IBOutlet weak var nameTF: UITextField!
     override func viewDidLoad() {
-       self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        //Hide keyboard by touching anywhere outside the keyboard.
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
+    //When save button is clicked, check if the input is empty, and if not update to firebase.
     @IBAction func SaveAction(_ sender: Any) {
         if self.nameTF.text?.isEmpty == true{
             let alert = UIAlertController(title: "Error", message: "Name can not be empty", preferredStyle: UIAlertController.Style.alert )
@@ -51,15 +50,4 @@ class ChangeNameViewController: UIViewController {
         }
        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

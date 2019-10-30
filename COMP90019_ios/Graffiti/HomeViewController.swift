@@ -1,7 +1,7 @@
 //
 //  HomeViewController.swift
 //  Graffiti
-//
+//  Home page
 //  Created by Teng-Sheng Ho on 2019/9/24.
 //  Copyright © 2019 Mh. All rights reserved.
 //
@@ -19,22 +19,19 @@ class HomeViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
     }
     
-    // prepare to send image to photo page
+    // prepare to send the photo to photo page.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      
       if segue.identifier == "photoPage" {
           let nextSg = segue.destination as! PhotoViewController
-
           nextSg.image = passImage
           }
       }
       
 
   
-    
+    //when plus button is clicked, user can choose to take a photo or pick one from gallery.
     @IBAction func photoAction(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
          
@@ -51,11 +48,7 @@ class HomeViewController: UIViewController {
          alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
          
          self.present(alert, animated: true, completion: nil)
-        
-        //self.performSegue(withIdentifier: "photoPage", sender: self)
     }
-
-
     //MARK: - Choose image from gallery
     func openGallary(){
         pickImage.sourceType = UIImagePickerController.SourceType.photoLibrary
@@ -69,7 +62,6 @@ class HomeViewController: UIViewController {
     func openCamera(){
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             pickImage.sourceType = UIImagePickerController.SourceType.camera
-            //If you dont want to edit the photo then you can set allowsEditing to false
             pickImage.allowsEditing = false
             pickImage.delegate = self
             self.present(pickImage, animated: true, completion: nil)
@@ -104,5 +96,3 @@ extension HomeViewController:  UIImagePickerControllerDelegate, UINavigationCont
         self.dismiss(animated: true, completion: nil)
     }
 }
-
-
