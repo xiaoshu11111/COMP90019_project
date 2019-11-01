@@ -4,6 +4,7 @@ import firebase from "./firebase";
 import { withRouter } from 'react-router-dom';
 import global from "./global";
 
+// this class shows the complete marker when the user click on one icon
 class WholeMarker extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +17,9 @@ class WholeMarker extends React.Component {
     this.hasdislike = false;
   }
 
+  // if the user click on like button, call this function
+  // if the user has never click on like or dislike, then the number of like +1 and store data
+  // otherwise, no response and nothing change
   addLike = () => {
     const like = this.props.data.like || 0;
     const id = this.props.data.key;
@@ -30,6 +34,9 @@ class WholeMarker extends React.Component {
     }
   };
 
+  // if the user click on like button, call this function
+  // if the user has never click on like or dislike, then the number of dislike +1 and store data
+  // otherwise, no response and nothing change
   addDisLike = () => {
     const dislike = this.props.data.dislike || 0;
     const id = this.props.data.key;
@@ -44,6 +51,8 @@ class WholeMarker extends React.Component {
     }
   };
 
+  // call this function after the first rendering, set state and render again
+  // recommended by React official
   componentDidMount() {
     const id = this.props.data.key;
     firebase.storage().ref(`images/${id}.jpg`).getDownloadURL().then(url => {

@@ -4,6 +4,7 @@ import firebase from './firebase';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
+// this class is to show the comment page and add new comment to a post
 export default class CommentsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,18 +15,19 @@ export default class CommentsPage extends React.Component {
     };
   }
 
+  // use this function to add new comment and store new comments in the database
   addComment = () => {
     const id = this.props.match.params.id;
-    const text = this.state.text;
+    const text = this.state.text.replace(/\s+/g,"");
     const submit = false;
-    if(text!=null && text.length < 140){
+
+    if(text.length <= 150 && text.length > 0){
       firebase.database().ref('comments').push().set({
         id,
         content: this.state.text || '',
       });
       this.submit = true;
     }
-
   };
 
   componentDidMount() {
@@ -68,6 +70,8 @@ export default class CommentsPage extends React.Component {
       comments,
     } = this.state;
     return (
+      // the layouts should be flexible
+      // flex:1 means that the component will occupy all space or share space with other components
       <div style={{ width: '100%', height: '90hv', display: 'flex', flex: 1, flexDirection: 'column'}}>
         <div style={{ backgroundColor: "#505FB5", width: '100%',
           display: 'flex', flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -111,18 +115,18 @@ export default class CommentsPage extends React.Component {
                 variant="outlined"
               />
               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Button variant="outlined" color="primary"
-                          onClick={() => {
-                            this.addComment();
-                            if(this.submit){
-                              this.props.history.go(0);
-                            }else{
-                              window.alert("Operation failed: the new comment cannot be void or more than 140 letters.");
-                            }
-                          }}
-                          style={{ marginLeft: 20, width: 200, backgroundColor: '#505FB5', color:"white"}}>
-                    Submit
-                  </Button>
+                <Button variant="outlined" color="primary"
+                        onClick={() => {
+                          this.addComment();
+                          if(this.submit){
+                            this.props.history.go(0);
+                          }else{
+                            window.alert("Operation failed: the new comment cannot be void or more than 150 letters.");
+                          }
+                        }}
+                        style={{ marginLeft: 20, width: 200, backgroundColor: '#505FB5', color:"white"}}>
+                  Submit
+                </Button>
                 <Button variant="outlined" color="secondary" onClick={() => {
                   this.props.history.push('');
                 }} style={{ marginRight: 20, width: 200 }}>

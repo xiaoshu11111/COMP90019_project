@@ -11,7 +11,9 @@ import {
   withRouter,
 } from "react-router-dom";
 
+// this class is to show the comment page and add new comment to a post
 class NewCommentPage extends React.Component {
+  // use this function to add new comment and store new comments in the database
   addComment = () => {
     const id = this.props.match.params.id;
     firebase.database().ref('comments').push().set({
