@@ -1,11 +1,18 @@
-**To run this server:**
+# instruction
 
-- run cmd in this dir
-- run "npm install"
-- run "npm install react-scripts"
-- run "npm run start"
+**After cloning the project to your computer, go to ./COMP90019_web and run the server by the command line below:**
 
-**To allow users access this web app from external networks:**
+```
+npm install
+npm install react-scripts
+npm run start
+```
 
-- go the dir called "ngrok"
-- after autentication, run "ngrok http [port number]"
+**To allow users access this web app from external networks, go to ./COMP90019_web/ngrok and run ngrok by the command line below:**
+
+```
+ngrok authtoken [your key]
+ngrok http [port number]
+```
+
+
