@@ -1,3 +1,11 @@
+/*
+  Change_name.java
+  Graffiti
+  Change Name page : allow user to change their displayname.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -44,8 +52,10 @@ public class Change_name extends AppCompatActivity {
     public void confirmBtn(View view) {
         name_context = change_name.getText().toString();
 
+        //get the current user details before chaneg name
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //use firebase build-in update profile function to change name
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name_context)
                 .build();

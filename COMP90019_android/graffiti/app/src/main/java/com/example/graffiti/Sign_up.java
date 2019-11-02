@@ -1,3 +1,10 @@
+/*
+  Sign_up.java
+  Graffiti
+  Sign up page : allow user to create an accunt.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -44,8 +51,11 @@ public class Sign_up extends AppCompatActivity {
         password = password_text.getText().toString();
         confirm = confirm_text.getText().toString();
 
+        //check if the password is larger than 6 characters
         if(password.length()>=6) {
+            //check if the password and confirmed one are matchec
             if (password.equals(confirm)) {
+                //create account using email and password user entered
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -73,6 +83,7 @@ public class Sign_up extends AppCompatActivity {
         }
     }
 
+    //update the name of user's account
     public void updateProfile(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

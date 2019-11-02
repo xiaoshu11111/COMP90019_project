@@ -1,3 +1,11 @@
+/*
+  Profile.java
+  Graffiti
+  Cprofile page : allow user to view the name and email, change the name, change the password and logout.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -50,6 +58,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        //log out function, will return to the first page of the application
         sign_out.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 FirebaseAuth.getInstance().signOut();
@@ -66,6 +75,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        //show the name and email on the page
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url

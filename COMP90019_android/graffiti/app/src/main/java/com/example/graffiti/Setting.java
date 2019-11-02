@@ -1,3 +1,10 @@
+/*
+  Setting.java
+  Graffiti
+  Setting page : allow user to view te settings.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
 package com.example.graffiti;
 
 import androidx.appcompat.app.AppCompatActivity;

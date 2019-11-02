@@ -1,3 +1,11 @@
+/*
+  Log_in.java
+  Graffiti
+  Log in page : allow user to go to sign up page or sign in page.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.appcompat.app.AppCompatActivity;

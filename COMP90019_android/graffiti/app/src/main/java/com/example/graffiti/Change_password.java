@@ -1,3 +1,11 @@
+/*
+  Change_password.java
+  Graffiti
+  Change password page : allow user to change password.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -41,8 +49,10 @@ public class Change_password extends AppCompatActivity {
     public void confirmBtn(View view) {
         String password = change_password.getText().toString();
 
+        //get the user details before chaneg password
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //use firebase build-in update password function to change password
         user.updatePassword(password)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

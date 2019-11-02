@@ -1,3 +1,11 @@
+/*
+  Feedback.java
+  Graffiti
+  Feedback page : view the uploaded photo details after uploading
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,11 +43,13 @@ public class Feedback extends AppCompatActivity {
             }
         });
 
+        //read all information from the last activity
         uri = getIntent().getExtras().getParcelable("uri");
         String description_str = getIntent().getStringExtra("description");
         String tag_str = getIntent().getStringExtra("tag");
         String address_str = getIntent().getStringExtra("address");
 
+        //load image to the image view
         Picasso.with(this).load(uri).into(photo);
         description.setText(description_str);
         tag.setText(tag_str);

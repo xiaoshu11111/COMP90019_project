@@ -1,3 +1,11 @@
+/*
+  New_photo.java
+  Graffiti
+  upload page : allow user to write a description, tag the content and upload
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
+
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -95,9 +103,9 @@ public class New_photo extends AppCompatActivity {
             }
         });
 
-//        Log.d(TAG, "atest");
-
         uid = user.getUid();
+
+        //read the location using get last known location function
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -107,19 +115,21 @@ public class New_photo extends AppCompatActivity {
                             double latitude = location.getLatitude();
                             double longtitude = location.getLongitude();
                             address = getCompleteAddressString(latitude, longtitude);
-//                            Log.d(TAG, "Address: "+address);
+
+                            //show address on the map, but upload latitude and longitude
                             location_view.setText(address);
                             mLocation = latitude+" "+ longtitude;
-//                            Log.d(TAG, "XY: "+mLocation);
                         } else {
                             Log.d(TAG, "location is null");
                         }
                     }
                 });
 
+        //get the data pass from the last activity
         String type = getIntent().getStringExtra("type");
         if(type.equals("BITMAP")) {
             Bitmap bitmap = getIntent().getExtras().getParcelable("name");
+            //convert the bitmap to image URI for future use
             mImageUri = getImageUri(getApplicationContext(), bitmap);
             Picasso.with(this).load(mImageUri).into(photo);
         } else if (type.equals("URI")) {
@@ -139,6 +149,8 @@ public class New_photo extends AppCompatActivity {
         });
     }
 
+
+    //Function to convert bitmap to image URI
     private Uri getImageUri(Context applicationContext, Bitmap photo) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -146,6 +158,7 @@ public class New_photo extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    // use the location to get the full address
     private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
         String strAdd = "";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -170,14 +183,17 @@ public class New_photo extends AppCompatActivity {
         return strAdd;
     }
 
+    //get the photo type, such as jpg and png
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+    //upload file using firebase upload function. Image URI is used for upload.
     private void uploadFile() {
         final String uploadId = mDatabaseRef.push().getKey();
+        //upload the photo first
         if (mImageUri != null && !description.getText().toString().trim().equals("") && !tag.getText().toString().trim().equals("")) {
             StorageReference fileReference = mStorageRef.child(uploadId
                     + "." + getFileExtension(mImageUri));
@@ -186,7 +202,8 @@ public class New_photo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                            //if phtot upload successful, go to the label image function to
+                            //label image and uplaod other information
                             label(mImageUri, uploadId);
                         }
                     })
@@ -216,7 +233,7 @@ public class New_photo extends AppCompatActivity {
 
     private void label(Uri imageUri, final String uploadId) {
         FirebaseVisionImage image;
-        try {
+        //use firebase ml kit to label image
             image = FirebaseVisionImage.fromFilePath(getApplicationContext(), imageUri);
             FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance()
                     .getOnDeviceImageLabeler();
@@ -228,6 +245,8 @@ public class New_photo extends AppCompatActivity {
                             String isGraffiti = "false";
                             boolean wall = false;
                             boolean poster = false;
+                            //according to the labels, check if a photo is graffiti
+                            //use algorithm: "wall">0.8 and "poster">0.4
                             for (FirebaseVisionImageLabel label: labels) {
                                 String text = label.getText();
                                 String entityId = label.getEntityId();
@@ -250,11 +269,13 @@ public class New_photo extends AppCompatActivity {
                                 isGraffiti = "true";
                             }
 
+                            //put all data into an object called "upload", and upload it
                             Upload upload = new Upload(uid, description.getText().toString().trim(), tag.getText().toString().trim(), mLocation, mm, isGraffiti);
                             mDatabaseRef.child(uploadId).setValue(upload);
 
                             Toast.makeText(New_photo.this, "Upload successful", Toast.LENGTH_LONG).show();
 
+                            //pass the photo information to the next activity
                             Intent i = new Intent(getApplicationContext(), Feedback.class);
                             i.putExtra("uri", mImageUri);
                             i.putExtra("description", description.getText().toString().trim());

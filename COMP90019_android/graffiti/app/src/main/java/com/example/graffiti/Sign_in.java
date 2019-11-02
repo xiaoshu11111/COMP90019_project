@@ -1,3 +1,10 @@
+/*
+  Sign_in.java
+  Graffiti
+  Sign in page : allow user to log in.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
 package com.example.graffiti;
 
 import androidx.annotation.NonNull;
@@ -40,6 +47,7 @@ public class Sign_in extends AppCompatActivity {
         String email = ema.getText().toString();
         String pass = pas.getText().toString();
 
+        // using the email and password user  entered to log in
         mAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

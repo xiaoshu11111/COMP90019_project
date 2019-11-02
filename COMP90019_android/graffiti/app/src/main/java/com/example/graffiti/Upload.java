@@ -1,3 +1,10 @@
+/*
+  Upload.java
+  Graffiti
+  Upload class : pack all data into an object for upload.
+  Created by Xiaoshu Chen on 2019/10/18.
+  Copyright © 2019 Xiaoshu All rights reserved.
+*/
 package com.example.graffiti;
 
 public class Upload {
