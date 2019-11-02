@@ -6,7 +6,7 @@ After cloning the project to your computer, you have to install android studio v
 
 click File -> New -> Import project, and choose the project folder, then wait for the gradle build and dowload dependency.
 
-A pop up window may appead says "unalbe to get Gradle wrapper properties", click "OK" button
+A pop up window may appeared says "unalbe to get Gradle wrapper properties", click "OK" button
 
 ## Run the application on simulator
 
