@@ -4,7 +4,7 @@ After cloning the project to your computer, you have to install android studio v
 
 ## Improt project
 
-click File -> New -> Import project, and choose the project folder, then wait for the gradle build and dowload dependency.
+click File -> New -> Import project, and choose the project folder (Remember to import the "graffiti" folder which under "COMP90019_android" folder, not the "COMP90019_android" folder!!!), then wait for the gradle build and dowload dependency.
 
 A pop up window may appeared says "unalbe to get Gradle wrapper properties", click "OK" button
 
