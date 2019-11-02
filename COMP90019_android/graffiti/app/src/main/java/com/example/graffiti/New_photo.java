@@ -234,6 +234,7 @@ public class New_photo extends AppCompatActivity {
     private void label(Uri imageUri, final String uploadId) {
         FirebaseVisionImage image;
         //use firebase ml kit to label image
+        try{
             image = FirebaseVisionImage.fromFilePath(getApplicationContext(), imageUri);
             FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance()
                     .getOnDeviceImageLabeler();
