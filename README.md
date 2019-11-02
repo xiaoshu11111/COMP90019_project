@@ -7,4 +7,4 @@ This repository contains three applications:
 
   Graffiti (web application) - COMP90019_web
   
-TO install each application, clone or downlad each folder and follow the readme file in the folder.
+To install each application, clone or downlad each folder and follow the readme file in the folder.
